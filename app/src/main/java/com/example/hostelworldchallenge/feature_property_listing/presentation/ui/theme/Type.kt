@@ -1,4 +1,4 @@
-package com.example.hostelworldchallenge.ui.theme
+package com.example.hostelworldchallenge.feature_property_listing.presentation.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
