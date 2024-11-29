@@ -8,7 +8,7 @@ import javax.inject.Inject
 class PropertyRepositoryImpl @Inject constructor(
     private val propertyApiService: PropertyApiService
 ) : PropertyRepository {
-    override suspend fun getProperties(): List<Property> {
+    override suspend fun getProperties(): MutableList<Property> {
         val response = propertyApiService.getProperties()
 
         return if (response.isSuccessful) {
@@ -16,10 +16,10 @@ class PropertyRepositoryImpl @Inject constructor(
             if (properties != null) {
                 return properties.properties
             } else {
-                emptyList()
+               mutableListOf()
             }
         } else {
-            emptyList()
+            mutableListOf()
         }
     }
 }

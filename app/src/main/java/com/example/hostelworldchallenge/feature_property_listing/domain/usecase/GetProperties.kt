@@ -13,11 +13,11 @@ import javax.inject.Inject
 class GetProperties @Inject constructor(
     private val propertiesRepository: PropertyRepository
 ) {
-    operator fun invoke(): Flow<Resource<List<Property>>> = flow {
+    operator fun invoke(): Flow<Resource<MutableList<Property>>> = flow {
         try {
             val properties = propertiesRepository.getProperties()
 
-            if (properties?.isNotEmpty() == true) {
+            if (properties.isNotEmpty()) {
                 emit(Resource.Success(properties))
             } else {
                 emit(Resource.Error("No properties found"))
