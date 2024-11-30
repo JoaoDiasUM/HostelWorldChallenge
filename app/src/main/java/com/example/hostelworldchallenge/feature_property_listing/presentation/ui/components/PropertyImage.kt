@@ -14,10 +14,7 @@ import coil.request.ImageRequest
 import com.example.hostelworldchallenge.feature_property_listing.data.model.Property
 
 @Composable
-fun PropertyImage(property: Property) {
-    val prefix = property.imagesGallery[0].prefix
-    val suffix = property.imagesGallery[0].suffix
-    val url = "https://$prefix$suffix"
+fun PropertyImage(imageUrl: String) {
 
     AsyncImage(
         modifier = Modifier
@@ -25,7 +22,7 @@ fun PropertyImage(property: Property) {
             .height(200.dp)
             .clip(RoundedCornerShape(24.dp)),
         model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
+            .data(imageUrl)
             .crossfade(true)
             .build(),
         contentDescription = "Image from URL",

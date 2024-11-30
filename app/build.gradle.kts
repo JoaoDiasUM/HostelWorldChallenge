@@ -75,8 +75,9 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.hilt.navigation.compose)
     implementation(libs.coil.compose)
-
+    implementation (libs.accompanist.swiperefresh)
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation (libs.retrofit2.kotlin.coroutines.adapter)
+
 }

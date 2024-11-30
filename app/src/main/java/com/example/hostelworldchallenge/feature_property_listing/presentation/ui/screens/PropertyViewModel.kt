@@ -42,4 +42,10 @@ class PropertyViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+    fun isLoading() {
+        _state.update {
+            it.copy(isLoading = true)
+        }
+    }
 }
