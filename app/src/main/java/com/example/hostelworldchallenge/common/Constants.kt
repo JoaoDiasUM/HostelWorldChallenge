@@ -1,5 +1,5 @@
 package com.example.hostelworldchallenge.common
 
 object Constants {
-    const val HTTP_PREFIX = "https://"
+    const val NAV_ARGUMENT_SELECTED_PROPERTY_ID = "selectedPropertyId"
 }

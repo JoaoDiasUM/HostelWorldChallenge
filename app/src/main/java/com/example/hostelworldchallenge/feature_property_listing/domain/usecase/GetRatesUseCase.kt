@@ -1,25 +1,24 @@
 package com.example.hostelworldchallenge.feature_property_listing.domain.usecase
 
 import com.example.hostelworldchallenge.common.Resource
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
+import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.Rates
 import com.example.hostelworldchallenge.feature_property_listing.domain.repository.PropertyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-
-class GetProperties @Inject constructor(
+class GetRatesUseCase @Inject constructor(
     private val propertiesRepository: PropertyRepository
 ) {
-    operator fun invoke(): Flow<Resource<MutableList<Property>>> = flow {
+    operator fun invoke(): Flow<Resource<Rates>> = flow {
         try {
-            val properties = propertiesRepository.getProperties()
+            val rates = propertiesRepository.getRates()
 
-            if (properties.isNotEmpty()) {
-                emit(Resource.Success(properties))
+            if (rates != null) {
+                emit(Resource.Success(rates))
             } else {
-                emit(Resource.Error("No properties found"))
+                emit(Resource.Error("Something went wrong"))
             }
         } catch (e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error happened"))

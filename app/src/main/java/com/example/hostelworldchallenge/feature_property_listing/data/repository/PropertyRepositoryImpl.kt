@@ -1,6 +1,7 @@
 package com.example.hostelworldchallenge.feature_property_listing.data.repository
 
-import com.example.hostelworldchallenge.feature_property_listing.data.model.Property
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
+import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.Rates
 import com.example.hostelworldchallenge.feature_property_listing.data.remote.PropertyApiService
 import com.example.hostelworldchallenge.feature_property_listing.domain.repository.PropertyRepository
 import javax.inject.Inject
@@ -20,6 +21,21 @@ class PropertyRepositoryImpl @Inject constructor(
             }
         } else {
             mutableListOf()
+        }
+    }
+
+    override suspend fun getRates(): Rates? {
+        val response = propertyApiService.getRates()
+
+        return if (response.isSuccessful) {
+            val rates = response.body()
+            if (rates != null) {
+                return rates.rates
+            } else {
+               null
+            }
+        } else {
+            return null
         }
     }
 }

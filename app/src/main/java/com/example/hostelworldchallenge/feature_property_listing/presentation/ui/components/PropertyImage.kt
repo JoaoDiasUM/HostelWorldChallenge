@@ -11,15 +11,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.hostelworldchallenge.feature_property_listing.data.model.Property
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
 
 @Composable
-fun PropertyImage(imageUrl: String) {
-
+fun PropertyImage(imageUrl: String, size: Int) {
+    // Have an improved placeholder image in case the request is slow, or image was not found
+    // Open large version of image on click
     AsyncImage(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
+            .height(size.dp)
             .clip(RoundedCornerShape(24.dp)),
         model = ImageRequest.Builder(LocalContext.current)
             .data(imageUrl)
