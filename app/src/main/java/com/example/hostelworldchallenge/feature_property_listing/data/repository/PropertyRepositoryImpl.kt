@@ -1,7 +1,7 @@
 package com.example.hostelworldchallenge.feature_property_listing.data.repository
 
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
-import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.Rates
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.PropertyRequestResponse
+import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.RatesRequestResponse
 import com.example.hostelworldchallenge.feature_property_listing.data.remote.PropertyApiService
 import com.example.hostelworldchallenge.feature_property_listing.domain.repository.PropertyRepository
 import javax.inject.Inject
@@ -9,33 +9,58 @@ import javax.inject.Inject
 class PropertyRepositoryImpl @Inject constructor(
     private val propertyApiService: PropertyApiService
 ) : PropertyRepository {
-    override suspend fun getProperties(): MutableList<Property> {
+    override suspend fun getProperties(): PropertyRequestResponse? {
         val response = propertyApiService.getProperties()
+
+        val receiveTime = response.raw().receivedResponseAtMillis
+        val sendTime = response.raw().sentRequestAtMillis
+        val requestTime = receiveTime - sendTime
 
         return if (response.isSuccessful) {
             val properties = response.body()
             if (properties != null) {
-                return properties.properties
+                properties.responseTime = requestTime
+                return properties
             } else {
-               mutableListOf()
+                null
             }
         } else {
-            mutableListOf()
+           null
         }
     }
 
-    override suspend fun getRates(): Rates? {
+    override suspend fun getRates(): RatesRequestResponse? {
         val response = propertyApiService.getRates()
+
+        val receiveTime = response.raw().receivedResponseAtMillis
+        val sendTime = response.raw().sentRequestAtMillis
+        val requestTime = receiveTime - sendTime
 
         return if (response.isSuccessful) {
             val rates = response.body()
             if (rates != null) {
-                return rates.rates
+                rates.responseTime = requestTime
+                return rates
             } else {
-               null
+                null
             }
         } else {
             return null
+        }
+    }
+
+    override suspend fun getStats(action: String, duration: Long): Long {
+        val response = propertyApiService.getStats(action, duration)
+
+        return if (response.isSuccessful) {
+            val stats = response.body()
+            if (stats != null) {
+                return stats
+            } else {
+                0
+            }
+        } else {
+            0
         }
     }
 }

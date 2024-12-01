@@ -1,7 +1,7 @@
 package com.example.hostelworldchallenge.feature_property_listing.domain.usecase
 
 import com.example.hostelworldchallenge.common.Resource
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.PropertyRequestResponse
 import com.example.hostelworldchallenge.feature_property_listing.domain.repository.PropertyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,11 +12,11 @@ import javax.inject.Inject
 class GetProperties @Inject constructor(
     private val propertiesRepository: PropertyRepository
 ) {
-    operator fun invoke(): Flow<Resource<MutableList<Property>>> = flow {
+    operator fun invoke(): Flow<Resource<PropertyRequestResponse>> = flow {
         try {
             val properties = propertiesRepository.getProperties()
 
-            if (properties.isNotEmpty()) {
+            if (properties?.properties?.isNotEmpty() == true) {
                 emit(Resource.Success(properties))
             } else {
                 emit(Resource.Error("No properties found"))

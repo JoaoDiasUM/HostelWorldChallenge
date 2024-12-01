@@ -80,4 +80,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation (libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.jsoup)
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.9.1")
 }

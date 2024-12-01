@@ -1,11 +1,11 @@
 package com.example.hostelworldchallenge.feature_property_listing.presentation.ui.screens.propertyListing
 
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hostelworldchallenge.common.Resource
 import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetProperties
 import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetRatesUseCase
+import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +18,7 @@ import javax.inject.Inject
 class PropertyViewModel @Inject constructor(
     private val getPropertiesUseCase: GetProperties,
     private val getRatesUseCase: GetRatesUseCase,
+    private val getStatsUseCase: GetStatsUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PropertyListingViewState())
@@ -38,9 +39,14 @@ class PropertyViewModel @Inject constructor(
                         isLoading = false
                     )
 
-                    is Resource.Success -> it.copy(
-                        propertyList = result.data ?: mutableListOf(),
-                    )
+                    is Resource.Success -> {
+                        result.data?.responseTime?.let { it1 -> getStats("load-details", it1) }
+
+                        it.copy(
+                            isLoading = false,
+                            propertyList = result.data?.properties ?: mutableListOf(),
+                        )
+                    }
                 }
             }
         }.launchIn(viewModelScope)
@@ -52,9 +58,32 @@ class PropertyViewModel @Inject constructor(
                 when (result) {
                     is Resource.Loading -> it.copy(isLoading = false)
                     is Resource.Error -> it.copy(
-                        error = result.message ?: "An unexpected error occurred",)
+                        error = result.message ?: "An unexpected error occurred"
+                    )
+
+                    is Resource.Success -> {
+                        result.data?.responseTime?.let { it1 -> getStats("load-rates", it1) }
+
+                        it.copy(
+                            rates = result.data?.rates,
+                        )
+                    }
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getStats(action: String, duration: Long) {
+        getStatsUseCase(action, duration).onEach { result ->
+            _state.update {
+                when (result) {
+                    is Resource.Loading -> it.copy(isLoading = false)
+                    is Resource.Error -> it.copy(
+                        error = result.message ?: "An unexpected error occurred"
+                    )
+
                     is Resource.Success -> it.copy(
-                        rates = result.data,
+                        networkStats = result.data,
                     )
                 }
             }

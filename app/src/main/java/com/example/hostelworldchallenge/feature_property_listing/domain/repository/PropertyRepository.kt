@@ -1,9 +1,10 @@
 package com.example.hostelworldchallenge.feature_property_listing.domain.repository
 
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
-import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.Rates
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.PropertyRequestResponse
+import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.RatesRequestResponse
 
 interface PropertyRepository {
-    suspend fun getProperties(): MutableList<Property>
-    suspend fun getRates(): Rates?
+    suspend fun getProperties(): PropertyRequestResponse?
+    suspend fun getRates(): RatesRequestResponse?
+    suspend fun getStats(action: String, duration: Long): Long
 }

@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,11 +21,23 @@ import com.example.hostelworldchallenge.feature_property_listing.presentation.ui
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.screens.propertyListing.PropertyViewModel
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.theme.HostelWorldChallengeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val splashscreen = installSplashScreen()
+        var keepSplashScreen = true
+
+        splashscreen.setKeepOnScreenCondition { keepSplashScreen }
+        lifecycleScope.launch {
+            delay(2000)
+            keepSplashScreen = false
+        }
+
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
