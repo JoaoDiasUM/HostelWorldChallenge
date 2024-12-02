@@ -20,10 +20,27 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-    }
+   }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "API_KEY", "\"https://gist.githubusercontent.com/\"")
+            buildConfigField(
+                "String",
+                "GOOGLE_MAPS_KEY",
+                "\"AIzaSyCmZ5LV40xya40M-A9o5b4VMxMmHzoPWyg\""
+            )
+            manifestPlaceholders["maps_key"] = "\"AIzaSyCmZ5LV40xya40M-A9o5b4VMxMmHzoPWyg\""
+        }
+
         release {
+            buildConfigField("String", "API_KEY", "\"https://gist.githubusercontent.com/\"")
+            buildConfigField(
+                "String",
+                "GOOGLE_MAPS_KEY",
+                "\"AIzaSyCmZ5LV40xya40M-A9o5b4VMxMmHzoPWyg\""
+            )
+            manifestPlaceholders["maps_key"] = "\"AIzaSyCmZ5LV40xya40M-A9o5b4VMxMmHzoPWyg\""
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -40,7 +57,9 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
     }
