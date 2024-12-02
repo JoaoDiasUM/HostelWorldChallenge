@@ -65,6 +65,8 @@ data class Property(
             starRating = starRating,
             type = type,
             facilities = facilities,
+            longitude = longitude,
+            latitude = latitude,
         )
     }
 }

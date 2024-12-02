@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.hostelworldchallenge"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.hostelworldchallenge"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.play.services.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,6 +81,9 @@ dependencies {
     implementation(libs.converter.gson)
     implementation (libs.retrofit2.kotlin.coroutines.adapter)
     implementation(libs.jsoup)
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.1")
+    implementation(libs.core.splashscreen)
+    implementation(libs.logging.interceptor)
+    implementation (libs.maps.compose)
+    implementation (libs.maps.compose.utils)
+    implementation (libs.maps.compose.widgets)
 }

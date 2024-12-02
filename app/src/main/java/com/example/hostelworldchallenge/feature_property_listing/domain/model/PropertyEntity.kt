@@ -24,4 +24,6 @@ data class PropertyEntity(
     val starRating: Int,
     val type: String,
     val facilities: List<Facility>,
+    val longitude: Double,
+    val latitude: Double,
 )

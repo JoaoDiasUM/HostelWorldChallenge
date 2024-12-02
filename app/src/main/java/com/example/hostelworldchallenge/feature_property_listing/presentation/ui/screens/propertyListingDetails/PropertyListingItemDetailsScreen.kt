@@ -3,9 +3,14 @@ package com.example.hostelworldchallenge.feature_property_listing.presentation.u
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -29,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.hostelworldchallenge.R
+import com.example.hostelworldchallenge.feature_property_listing.data.model.property.FacilityX
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.CurrencySelector
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.ErrorView
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.FacilityItem
@@ -36,8 +42,13 @@ import com.example.hostelworldchallenge.feature_property_listing.presentation.ui
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyDetailText
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyImagesHorizontalSlider
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.screens.propertyListing.PropertyViewModel
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.rememberCameraPositionState
 import org.jsoup.Jsoup
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PropertyListingItemDetailsScreen(
     propertyViewModel: PropertyViewModel,
@@ -85,7 +96,8 @@ fun PropertyListingItemDetailsScreen(
 
                     var selectedRate by remember { mutableStateOf(currencyOptions[0]) }
 
-                    PropertyImagesHorizontalSlider(property = selectedProperty,
+                    PropertyImagesHorizontalSlider(
+                        property = selectedProperty,
                         LocalContext.current.resources.getInteger(R.integer.details_horizontal_slider)
                     )
 
@@ -94,7 +106,7 @@ fun PropertyListingItemDetailsScreen(
 
                     Text(
                         modifier = Modifier
-                            .padding(10.dp,16.dp,10.dp,10.dp),
+                            .padding(10.dp, 16.dp, 10.dp, 10.dp),
                         text = overview,
                         textAlign = TextAlign.Center,
                         style = TextStyle(
@@ -104,13 +116,24 @@ fun PropertyListingItemDetailsScreen(
                         )
                     )
 
-                    LowestPricePerNight(
-                        property = selectedProperty,
-                        selectedRate,
-                        state.value.rates
-                    )
+                    Row(modifier = Modifier.height(50.dp)) {
+                        LowestPricePerNight(
+                            property = selectedProperty,
+                            selectedRate,
+                            state.value.rates
+                        )
 
-                    PropertyDetailText(stringResource(id = R.string.property_title_type), propertyText = selectedProperty.type)
+                        CurrencySelector(
+                            rates = currencyOptions,
+                            selectedRate = selectedRate,
+                            onRateSelected = { selectedRate = it }
+                        )
+                    }
+
+                    PropertyDetailText(
+                        stringResource(id = R.string.property_title_type),
+                        propertyText = selectedProperty.type
+                    )
 
                     PropertyDetailText(
                         stringResource(id = R.string.property_title_address),
@@ -124,25 +147,37 @@ fun PropertyListingItemDetailsScreen(
                         )
                     }
 
-
-                    if (selectedProperty.facilities.isNotEmpty()) {
-                        selectedProperty.facilities.forEach {
-                            if (selectedProperty.facilities.isNotEmpty()) {
-                                it.facilities.forEach { facility ->
-                                    FacilityItem(facilityX = facility)
-                                }
-                            }
+                    val facilities = mutableListOf<FacilityX>()
+                    selectedProperty.facilities.forEach {
+                        it.facilities.forEach { facility ->
+                            facilities.add(facility)
                         }
                     }
 
+                    FlowRow(modifier = Modifier.padding(10.dp)) {
+                        facilities.forEach { 
+                            FacilityItem(facilityX = it)
+                        }
+                    }
 
-                    CurrencySelector(
-                        rates = currencyOptions,
-                        selectedRate = selectedRate,
-                        onRateSelected = { selectedRate = it }
+                    val propertyLocation =
+                        LatLng(selectedProperty.latitude, selectedProperty.longitude)
+                    val cameraPositionState = rememberCameraPositionState {
+                        position = CameraPosition.fromLatLngZoom(propertyLocation, 15f)
+                    }
+
+                    // First load of map can be somewhat slow, to improve
+                    GoogleMap(
+                        modifier = Modifier
+                            .size(400.dp)
+                            .clip(RoundedCornerShape(30.dp)),
+                        cameraPositionState = cameraPositionState
                     )
                 } else {
-                    ErrorView(errorStringId = R.string.generic_error, errorDrawableId = R.drawable.ic_error)
+                    ErrorView(
+                        errorStringId = R.string.generic_error,
+                        errorDrawableId = R.drawable.ic_error
+                    )
                 }
             }
         }
