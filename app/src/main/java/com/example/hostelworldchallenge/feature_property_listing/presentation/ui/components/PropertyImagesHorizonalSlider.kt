@@ -4,13 +4,12 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import com.example.hostelworldchallenge.common.Constants
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
+import com.example.hostelworldchallenge.feature_property_listing.domain.model.PropertyEntity
 
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PropertyImagesHorizontalSlider(property: Property, size: Int) {
+fun PropertyImagesHorizontalSlider(property: PropertyEntity, size: Int) {
     val pagerState = rememberPagerState { property.imagesGallery.size }
 
     val imageUrlList = mutableListOf<String>()

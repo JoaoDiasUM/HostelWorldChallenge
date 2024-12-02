@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.example.hostelworldchallenge.R
+import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.ErrorView
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.LoadingIndicator
-import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.NoConnectionView
 import com.example.hostelworldchallenge.utils.ConnectionUtils
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
@@ -59,34 +59,46 @@ fun PropertyListingScreen(navController: NavController, propertyViewModel: Prope
                 isConnectionAvailable = ConnectionUtils.isInternetAvailable(context)
             }
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                state = rememberLazyListState()
-            ) {
-                item {
-                    Text(
-                        modifier = Modifier.padding(10.dp),
-                        text = stringResource(id = R.string.property_listing_screen),
-                        style = TextStyle(
-                            fontSize = 32.sp,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold
+            if (state.value.error != null) {
+                ErrorView(
+                    errorStringId = R.string.generic_error,
+                    errorDrawableId = R.drawable.ic_error
+                )
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    state = rememberLazyListState()
+                ) {
+                    item {
+                        Text(
+                            modifier = Modifier.padding(10.dp),
+                            text = stringResource(id = R.string.property_listing_screen),
+                            style = TextStyle(
+                                fontSize = 32.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            )
                         )
-                    )
-                }
-
-                if (state.value.isLoading) {
-                    item { LoadingIndicator() }
-                } else if (isConnectionAvailable) {
-                    items(
-                        items = state.value.propertyList,
-                        key = { it.id }
-                    ) { item ->
-                        PropertyListingItemScreen(navController, property = item)
                     }
-                } else {
-                    item { NoConnectionView() }
+
+                    if (state.value.isLoading) {
+                        item { LoadingIndicator() }
+                    } else if (isConnectionAvailable) {
+                        items(
+                            items = state.value.propertyList,
+                            key = { it.id }
+                        ) { item ->
+                            PropertyListingItemScreen(navController, property = item)
+                        }
+                    } else {
+                        item {
+                            ErrorView(
+                                errorStringId = R.string.no_connection,
+                                errorDrawableId = R.drawable.ic_no_connection
+                            )
+                        }
+                    }
                 }
             }
         }

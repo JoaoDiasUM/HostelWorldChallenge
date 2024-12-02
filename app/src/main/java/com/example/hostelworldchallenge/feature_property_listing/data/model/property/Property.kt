@@ -1,5 +1,7 @@
 package com.example.hostelworldchallenge.feature_property_listing.data.model.property
 
+import com.example.hostelworldchallenge.feature_property_listing.domain.model.PropertyEntity
+
 data class Property(
     val address1: String,
     val address2: String,
@@ -44,4 +46,25 @@ data class Property(
     val stayRuleViolations: List<StayRuleViolation>,
     val type: String,
     val veryPopular: Boolean
-)
+) {
+    fun toPropertyEntity(): PropertyEntity {
+        return PropertyEntity(
+            id = id,
+            address1 = address1,
+            address2 = address2,
+            freeCancellation = freeCancellation,
+            freeCancellationAvailable = freeCancellationAvailable,
+            freeCancellationAvailableUntil = freeCancellationAvailableUntil,
+            imagesGallery = imagesGallery,
+            isFeatured = isFeatured,
+            lowestPricePerNight = lowestPricePerNight,
+            lowestAveragePricePerNight = lowestAveragePricePerNight,
+            name = name,
+            overallRating = overallRating,
+            overview = overview,
+            starRating = starRating,
+            type = type,
+            facilities = facilities,
+        )
+    }
+}

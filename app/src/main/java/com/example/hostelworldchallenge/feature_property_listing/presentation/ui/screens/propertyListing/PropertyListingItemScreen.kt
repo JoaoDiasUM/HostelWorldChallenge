@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hostelworldchallenge.R
-import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
+import com.example.hostelworldchallenge.feature_property_listing.domain.model.PropertyEntity
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.LowestPricePerNight
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyImagesHorizontalSlider
 import java.util.Locale
@@ -33,7 +33,7 @@ import java.util.Locale
 @Composable
 fun PropertyListingItemScreen(
     navController: NavController,
-    property: Property,
+    property: PropertyEntity,
 ) {
     Box(
         modifier = Modifier

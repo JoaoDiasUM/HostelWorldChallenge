@@ -1,6 +1,7 @@
 package com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,28 +17,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.hostelworldchallenge.R
 
 @Composable
-fun NoConnectionView() {
-    Text(
-        modifier = Modifier
-            .padding(20.dp),
-        textAlign = TextAlign.Center,
-        text = stringResource(id = R.string.no_connection),
-        style = TextStyle(
-            fontSize = 24.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
+fun ErrorView(errorStringId: Int, errorDrawableId: Int) {
+    Column {
+        Text(
+            modifier = Modifier
+                .padding(20.dp),
+            textAlign = TextAlign.Center,
+            text = stringResource(id = errorStringId),
+            style = TextStyle(
+                fontSize = 24.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
         )
-    )
 
-    Image(
-        painter = painterResource(id = R.drawable.ic_no_connection),
-        contentDescription = "Image description",
-        modifier = Modifier
-            .fillMaxWidth()
-            .size(200.dp),
-        contentScale = ContentScale.Fit
-    )
+        Image(
+            painter = painterResource(errorDrawableId),
+            contentDescription = "Image description",
+            modifier = Modifier
+                .fillMaxWidth()
+                .size(200.dp),
+            contentScale = ContentScale.Fit
+        )
+    }
 }

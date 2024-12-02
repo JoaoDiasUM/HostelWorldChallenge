@@ -14,10 +14,12 @@ import androidx.compose.ui.unit.sp
 import com.example.hostelworldchallenge.R
 import com.example.hostelworldchallenge.feature_property_listing.data.model.property.Property
 import com.example.hostelworldchallenge.feature_property_listing.data.model.rates.Rates
+import com.example.hostelworldchallenge.feature_property_listing.domain.model.PropertyEntity
+import com.example.hostelworldchallenge.feature_property_listing.domain.model.RatesEntity
 import java.util.Locale
 
 @Composable
-fun LowestPricePerNight(property: Property, selectedRate: String? = null, rates: Rates? = null) {
+fun LowestPricePerNight(property: PropertyEntity, selectedRate: String? = null, rates: RatesEntity? = null) {
     Row {
         var lowestPrice =
             property.lowestPricePerNight.value + stringResource(id = R.string.euro_sign)

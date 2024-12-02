@@ -65,7 +65,7 @@ class PropertyViewModel @Inject constructor(
                         result.data?.responseTime?.let { it1 -> getStats("load-rates", it1) }
 
                         it.copy(
-                            rates = result.data?.rates,
+                            rates = result.data,
                         )
                     }
                 }

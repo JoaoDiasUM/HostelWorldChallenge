@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.hostelworldchallenge.R
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.CurrencySelector
+import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.ErrorView
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.FacilityItem
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.LowestPricePerNight
-import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.NoConnectionView
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyDetailText
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyImagesHorizontalSlider
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.screens.propertyListing.PropertyViewModel
@@ -142,7 +142,7 @@ fun PropertyListingItemDetailsScreen(
                         onRateSelected = { selectedRate = it }
                     )
                 } else {
-                    NoConnectionView()
+                    ErrorView(errorStringId = R.string.generic_error, errorDrawableId = R.drawable.ic_error)
                 }
             }
         }
