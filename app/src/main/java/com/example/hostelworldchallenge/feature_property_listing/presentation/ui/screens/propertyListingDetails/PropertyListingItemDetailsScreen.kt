@@ -37,6 +37,7 @@ import com.example.hostelworldchallenge.R
 import com.example.hostelworldchallenge.feature_property_listing.data.model.property.FacilityX
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.CurrencySelector
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.ErrorView
+import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.ExpandableFacilitiesGrid
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.FacilityItem
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.LowestPricePerNight
 import com.example.hostelworldchallenge.feature_property_listing.presentation.ui.components.PropertyDetailText
@@ -154,11 +155,7 @@ fun PropertyListingItemDetailsScreen(
                         }
                     }
 
-                    FlowRow(modifier = Modifier.padding(10.dp)) {
-                        facilities.forEach { 
-                            FacilityItem(facilityX = it)
-                        }
-                    }
+                    ExpandableFacilitiesGrid(facilities = facilities)
 
                     val propertyLocation =
                         LatLng(selectedProperty.latitude, selectedProperty.longitude)

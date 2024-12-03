@@ -14,6 +14,8 @@
     <string name="property_title_address">"Address: "</string>
     <string name="property_title_overview">"Overview: "</string>
     <string name="property_title_free_cancellation_until">"Free cancellation until: "</string>
+    <string name="property_expandable_text_more">"Show more facilities"</string>
+    <string name="property_expandable_text_less">"Show less facilities"</string>
 
     <string-array name="currency_options_array">
         <item>EUR</item>
