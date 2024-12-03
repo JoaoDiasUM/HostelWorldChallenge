@@ -9,7 +9,7 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class GetProperties @Inject constructor(
+class GetPropertiesUseCase @Inject constructor(
     private val propertiesRepository: PropertyRepository
 ) {
     operator fun invoke(): Flow<Resource<PropertyRequestResponseEntity>> = flow {
@@ -19,6 +19,7 @@ class GetProperties @Inject constructor(
             if (properties?.properties?.isNotEmpty() == true) {
                 emit(Resource.Success(properties.mapToPropertyRequestEntity()))
             } else {
+                // Improve error handling to have a message by http error type updating the current view if needed
                 emit(Resource.Error("No properties found"))
             }
         } catch (e: HttpException) {

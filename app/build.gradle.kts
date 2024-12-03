@@ -73,8 +73,6 @@ android {
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
@@ -84,25 +82,52 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Maps
+    implementation(libs.play.services.maps)
+
+    // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.fragment)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation (libs.androidx.hilt.navigation.compose)
-    implementation(libs.coil.compose)
-    implementation (libs.accompanist.swiperefresh)
+
+    // Network
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation (libs.retrofit2.kotlin.coroutines.adapter)
-    implementation(libs.jsoup)
-    implementation(libs.core.splashscreen)
     implementation(libs.logging.interceptor)
+
+    // Compose
     implementation (libs.maps.compose)
     implementation (libs.maps.compose.utils)
     implementation (libs.maps.compose.widgets)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.hilt.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    // Testing
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.android.compiler)
+    testAnnotationProcessor(libs.hilt.android.compiler)
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.android.compiler)
+    androidTestAnnotationProcessor(libs.hilt.android.compiler)
+    androidTestImplementation(libs.ui.test.junit4)
+    debugImplementation(libs.ui.test.manifest)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.mockk.android)
+    testImplementation (libs.mockk.agent)
+    testImplementation(libs.turbine)
+    testImplementation(libs.mockito.kotlin)
+
+    // External
+    implementation (libs.accompanist.swiperefresh)
+    implementation(libs.jsoup)
+    implementation(libs.core.splashscreen)
 }

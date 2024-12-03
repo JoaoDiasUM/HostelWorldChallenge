@@ -3,7 +3,7 @@ package com.example.hostelworldchallenge.feature_property_listing.presentation.u
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.hostelworldchallenge.common.Resource
-import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetProperties
+import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetPropertiesUseCase
 import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetRatesUseCase
 import com.example.hostelworldchallenge.feature_property_listing.domain.usecase.GetStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PropertyViewModel @Inject constructor(
-    private val getPropertiesUseCase: GetProperties,
+    private val getPropertiesUseCase: GetPropertiesUseCase,
     private val getRatesUseCase: GetRatesUseCase,
     private val getStatsUseCase: GetStatsUseCase,
 ) : ViewModel() {
@@ -29,7 +29,7 @@ class PropertyViewModel @Inject constructor(
         getRates()
     }
 
-    private fun getProperties() {
+    fun getProperties() {
         getPropertiesUseCase().onEach { result ->
             _state.update {
                 when (result) {
@@ -52,7 +52,7 @@ class PropertyViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    private fun getRates() {
+    fun getRates() {
         getRatesUseCase().onEach { result ->
             _state.update {
                 when (result) {

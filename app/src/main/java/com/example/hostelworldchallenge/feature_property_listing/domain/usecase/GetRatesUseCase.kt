@@ -19,6 +19,7 @@ class GetRatesUseCase @Inject constructor(
             if (rates != null) {
                 emit(Resource.Success(rates.toRatesResponseEntity()))
             } else {
+                // Improve error handling to have a message by http error type updating the current view if needed
                 emit(Resource.Error("Something went wrong"))
             }
         } catch (e: HttpException) {
